@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>NAMASTE TOOLS — インド駐在の暮らしを、すこし軽く。</title>
+<meta name="description" content="インド駐在者とその家族のための便利Webアプリ集">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500;1,6..96,700&family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --contact-img:url(img/contact.jpg);
+  --hero-img:url(img/hero.jpg);
+  --paper:#FAFAF7;
+  --ink:#141414;
+  --ink-soft:#5C5C57;
+  --line:#E2E1DB;
+  --marigold:#E89A2B;
+  --akane:#C64F3D;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  color-scheme:only light;
+  background:#FAFAF7;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  font-family:"Zen Kaku Gothic New",sans-serif;
+  background:#FAFAF7 !important;color:var(--ink);
+  line-height:1.8;-webkit-font-smoothing:antialiased;
+}
+.display{font-family:"Bodoni Moda",serif}
+.serif{font-family:"Shippori Mincho",serif}
+a:focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
+
+/* ===== Header ===== */
+header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(250,250,247,.9);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1200px;margin:0 auto;
+  padding:18px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-family:"Bodoni Moda",serif;font-weight:700;
+  font-size:1.05rem;letter-spacing:.06em;
+  color:var(--ink);text-decoration:none;
+}
+nav{display:flex;gap:26px}
+nav a{
+  color:var(--ink);text-decoration:none;
+  font-size:.72rem;font-weight:700;letter-spacing:.2em;
+  transition:color .2s;
+}
+nav a:hover{color:var(--marigold)}
+@media (max-width:640px){nav{gap:16px}nav a{font-size:.65rem;letter-spacing:.14em}}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;
+  min-height:92vh;
+  display:flex;align-items:flex-end;
+  background:
+    linear-gradient(180deg, rgba(10,12,18,.35) 0%, rgba(10,12,18,.15) 45%, rgba(10,12,18,.62) 100%),
+    var(--hero-img) center 30%/cover no-repeat #22293A;
+  color:#fff;
+}
+.hero-inner{
+  width:100%;max-width:1200px;margin:0 auto;
+  padding:110px 28px 84px;
+  position:relative;
+}
+.hero-eyebrow{
+  font-size:.72rem;font-weight:700;letter-spacing:.32em;
+  color:rgba(255,255,255,.85);margin-bottom:30px;
+}
+h1{
+  font-family:"Bodoni Moda",serif;
+  font-weight:700;
+  font-size:clamp(3.2rem,11vw,8.5rem);
+  line-height:.98;letter-spacing:.01em;
+  text-transform:uppercase;
+  text-shadow:0 2px 24px rgba(0,0,0,.35);
+}
+h1 em{font-style:italic;font-weight:500}
+.hero-sub{
+  margin-top:40px;
+  display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;
+}
+.hero-sub .serif{
+  font-size:clamp(1.05rem,2.4vw,1.4rem);
+  font-weight:600;letter-spacing:.04em;
+  color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35);
+}
+.hero-sub .serif strong{
+  font-weight:700;
+  background:linear-gradient(transparent 62%, rgba(232,154,43,.55) 62%);
+}
+.hero-credit{
+  position:absolute;left:28px;bottom:26px;
+  font-family:"Bodoni Moda",serif;font-style:italic;
+  font-size:.72rem;letter-spacing:.16em;
+  color:rgba(255,255,255,.75);
+}
+.scroll-note{
+  position:absolute;right:28px;bottom:28px;
+  color:rgba(255,255,255,.85);
+  font-size:.66rem;letter-spacing:.3em;color:var(--ink-soft);
+  writing-mode:vertical-rl;
+}
+.scroll-note::after{
+  content:"";display:block;width:1px;height:44px;
+  background:#fff;margin:12px auto 0;
+  animation:drop 2s ease-in-out infinite;
+}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== Marquee ===== */
+.marquee{
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  overflow:hidden;white-space:nowrap;
+  padding:12px 0;
+}
+.marquee-track{
+  display:inline-block;
+  animation:scroll 28s linear infinite;
+  font-size:.78rem;font-weight:700;letter-spacing:.26em;
+}
+.marquee-track em{font-style:normal;color:var(--marigold);padding:0 .4em}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== Sections ===== */
+.section{max-width:1200px;margin:0 auto;padding:96px 28px 20px}
+.sec-no{
+  font-size:.72rem;font-weight:700;letter-spacing:.3em;
+  color:var(--ink-soft);margin-bottom:14px;
+}
+.sec-no b{color:var(--marigold)}
+h2{
+  display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+  margin-bottom:48px;
+}
+h2 .en{
+  font-family:"Bodoni Moda",serif;font-weight:700;
+  font-size:clamp(2rem,5vw,3.2rem);
+  letter-spacing:.02em;text-transform:uppercase;
+}
+h2 .jp{
+  font-family:"Shippori Mincho",serif;
+  font-size:clamp(.95rem,2vw,1.1rem);font-weight:600;
+  color:var(--ink-soft);
+}
+
+/* ===== Apps ===== */
+.app-list{display:flex;flex-direction:column}
+.app-band{
+  position:relative;
+  min-height:88vh;
+  display:flex;align-items:flex-end;
+  background-color:#22293A;
+  background-size:cover;
+  background-position:center 35%;
+  background-attachment:fixed;
+  color:#fff;
+  text-decoration:none;
+}
+@media (max-width:900px){.app-band{background-attachment:scroll}}
+.app-band::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(10,12,18,.30) 0%, rgba(10,12,18,.10) 45%, rgba(10,12,18,.72) 100%);
+}
+.band-inner{
+  position:relative;width:100%;
+  max-width:1200px;margin:0 auto;
+  padding:0 28px 72px;
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
+  gap:clamp(24px,4vw,60px);
+  align-items:end;
+}
+.app-thumb{
+  aspect-ratio:9/16;max-height:420px;width:100%;
+  justify-self:end;
+  background:rgba(250,250,247,.92);
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  color:#5C5C57;
+  font-size:.62rem;letter-spacing:.22em;text-align:center;
+  padding:16px;
+  transform:rotate(1.5deg);
+  transition:transform .35s ease;
+  overflow:hidden;
+}
+.app-band:hover .app-thumb{transform:rotate(0deg) translateY(-6px)}
+.app-thumb img{width:100%;height:100%;object-fit:cover;display:block;margin:-16px;padding:0}
+.app-thumb .t-name{
+  font-family:"Shippori Mincho",serif;
+  font-size:.95rem;font-weight:700;letter-spacing:.06em;
+  color:#141414;
+}
+.app-thumb .t-frame{
+  width:52px;height:52px;border:1px solid #C9C7BE;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:#9A988F;
+}
+@media (max-width:820px){
+  .band-inner{grid-template-columns:1fr;align-items:start}
+  .app-thumb{justify-self:start;max-height:300px;aspect-ratio:3/4;width:min(62vw,260px)}
+}
+.band-no{
+  font-family:"Bodoni Moda",serif;font-style:italic;
+  font-size:clamp(2.6rem,7vw,4.6rem);
+  color:rgba(255,255,255,.9);
+  line-height:1;
+}
+.app-cat{
+  font-size:.7rem;font-weight:700;letter-spacing:.3em;
+  color:var(--marigold);margin:20px 0 12px;
+}
+.app-title{
+  font-family:"Shippori Mincho",serif;font-weight:700;
+  font-size:clamp(1.7rem,4.4vw,2.8rem);
+  line-height:1.4;margin-bottom:16px;
+  text-shadow:0 2px 18px rgba(0,0,0,.45);
+}
+.app-desc{
+  color:rgba(255,255,255,.88);font-size:.95rem;max-width:36em;
+  text-shadow:0 1px 8px rgba(0,0,0,.4);
+}
+.app-open{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:28px;
+  font-size:.74rem;font-weight:700;letter-spacing:.26em;
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.8);
+  padding-bottom:6px;
+  transition:color .2s,border-color .2s;
+}
+.app-band:hover .app-open{color:var(--marigold);border-color:var(--marigold)}
+.app-open .arrow{transition:transform .25s}
+.app-band:hover .arrow{transform:translateX(6px)}
+.badge-new{
+  display:inline-block;
+  background:var(--akane);color:#fff;
+  font-size:.64rem;font-weight:700;letter-spacing:.22em;
+  padding:7px 16px;margin-left:14px;
+  vertical-align:middle;
+}
+.band-credit{
+  position:absolute;right:28px;bottom:24px;
+  font-family:"Bodoni Moda",serif;font-style:italic;
+  font-size:.72rem;letter-spacing:.16em;
+  color:rgba(255,255,255,.75);
+}
+.coming-note{
+  padding:64px 28px;
+  text-align:center;color:var(--ink-soft);
+  font-size:.86rem;letter-spacing:.06em;
+}
+.coming-note .display{color:var(--marigold);font-style:italic;font-size:1.1rem;letter-spacing:.1em}
+
+/* ===== About ===== */
+.about-grid{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);
+  gap:clamp(28px,5vw,72px);
+  border-top:1px solid var(--line);
+  padding-top:56px;
+}
+.about-photo{
+  aspect-ratio:3/4;position:relative;overflow:hidden;
+  background:repeating-linear-gradient(45deg,#ECEBE5 0 12px,#E4E3DC 12px 24px);
+}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.about-body p{color:var(--ink-soft);font-size:.95rem;margin-bottom:1.2em}
+.about-body .lede{
+  font-family:"Shippori Mincho",serif;
+  color:var(--ink);font-size:1.15rem;font-weight:600;
+  line-height:2;margin-bottom:1.4em;
+}
+@media (max-width:760px){.about-grid{grid-template-columns:1fr}}
+
+/* ===== Contact / Footer ===== */
+.contact{
+  position:relative;
+  margin-top:72px;
+  min-height:74vh;
+  display:flex;flex-direction:column;justify-content:center;
+  text-align:center;
+  color:#fff;
+  background:var(--contact-img) center 45%/cover no-repeat #22293A;
+}
+.contact::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(10,12,18,.45) 0%, rgba(10,12,18,.30) 50%, rgba(10,12,18,.72) 100%);
+}
+.contact > *{position:relative}
+.contact .sec-no{color:rgba(255,255,255,.8)}
+.contact .display{
+  font-size:clamp(1.8rem,5vw,3rem);font-weight:700;
+  text-transform:uppercase;letter-spacing:.03em;
+  text-shadow:0 2px 18px rgba(0,0,0,.45);
+}
+.contact p{color:rgba(255,255,255,.88);margin-top:16px;font-size:.9rem;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.contact .contact-credit{
+  position:absolute;right:28px;bottom:22px;
+  font-family:"Bodoni Moda",serif;font-style:italic;
+  font-size:.72rem;letter-spacing:.16em;
+  color:rgba(255,255,255,.75);margin:0;text-shadow:none;
+}
+footer{
+  background:#141414;
+  padding:26px 28px;
+  text-align:center;
+  font-size:.7rem;letter-spacing:.2em;color:rgba(250,250,247,.65);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#top">NAMASTE TOOLS.</a>
+    <nav aria-label="メイン">
+      <a href="#apps">APPS</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">WEB APPS FOR EXPATS &amp; FAMILIES IN INDIA</p>
+      <h1 class="display">NAMASTE<br><em>TOOLS</em></h1>
+      <div class="hero-sub">
+        <p class="serif">インド駐在の暮らしを、<strong>すこし軽く</strong>する道具箱。</p>
+      </div>
+    </div>
+    <span class="hero-credit" aria-hidden="true">ADIYOGI — TAMIL NADU</span>
+    <span class="scroll-note" aria-hidden="true">SCROLL</span>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+
+  <section id="apps">
+    <div class="section" style="padding-bottom:56px">
+      <p class="sec-no"><b>01</b> — TOOLBOX</p>
+      <h2 style="margin-bottom:0"><span class="en">APPS</span><span class="jp">現地の「困った」から生まれた道具たち</span></h2>
+    </div>
+    <div class="app-list" id="app-list"></div>
+    <p class="coming-note"><span class="display">Next tool in progress —</span><br>新しいアプリを準備中です。リクエストもお待ちしています。</p>
+  </section>
+
+  <section class="section" id="about">
+    <p class="sec-no"><b>02</b> — PROFILE</p>
+    <h2><span class="en">ABOUT</span><span class="jp">このサイトについて</span></h2>
+    <div class="about-grid">
+      <figure class="about-photo">
+        <img src="img/about.jpg" alt="バンガロールの日本食レストラン MATSURI の入口">
+        <figcaption class="app-caption" style="color:rgba(255,255,255,.9);text-shadow:0 1px 6px rgba(0,0,0,.5)">MATSURI — JAPAN IN BENGALURU</figcaption>
+      </figure>
+      <div class="about-body">
+        <p class="lede">両替、ことば、病院——。<br>駐在生活の「ちょっと困った」を、道具にする。</p>
+        <p>バンガロール在住の日本人駐在員が、自分と家族の「あったらいいな」を形にしたWebアプリ集です。すべてブラウザだけで動き、インストールは不要。日本語UIで、赴任したての方やご家族にも迷わず使っていただけます。</p>
+        <p>同じようにインドで暮らす方々の毎日が、すこしでも軽くなればうれしいです。アプリは今後も随時追加していきます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <p class="sec-no"><b>03</b> — CONTACT</p>
+    <p class="display">GET IN TOUCH</p>
+    <p>ご意見・アプリのリクエストなど、お気軽にどうぞ。</p>
+    <p class="contact-credit" aria-hidden="true">ADIYOGI VERANDA — KARNATAKA</p>
+  </section>
+</main>
+
+<footer>© 2026 NAMASTE TOOLS — MADE IN BENGALURU</footer>
+
+<script>
+/* ============================================================
+   アプリの追加はこの配列に1オブジェクト足すだけ。
+   - isNew: true      → 「NEW」バッジ
+   - image: "パス"     → 写真に差し替え(空ならプレースホルダー)
+   - caption          → 写真右下の英字キャプション
+   ============================================================ */
+const apps = [
+  {
+    category: "MONEY",
+    title: "INR⇔JPY 為替換算",
+    desc: "ルピーと円をワンタップで相互換算。買い物や経費精算のおともに。オフラインでも直近レートで計算できます。",
+    url: "https://narindia.github.io/inr-jpy",
+    caption: "PAYING BY UPI — FISH MARKET, BENGALURU",
+    isNew: false,
+    image: "img/app-money.jpg"
+  ,
+    thumb: ""},
+  {
+    category: "LANGUAGE",
+    title: "カンナダ語学習アプリ",
+    desc: "バンガロールの現地語・カンナダ語を、日本語UIとカタカナ読みで気軽に学べる単語帳。まずは30フレーズから。",
+    url: "#",
+    caption: "FILTER COFFEE — A LOCAL RITUAL",
+    isNew: false,
+    image: "img/app-language.jpg"
+  ,
+    thumb: ""},
+  {
+    category: "HEALTH",
+    title: "病院サポートアプリ",
+    desc: "インドでの通院をサポート。いざという時に慌てないための、駐在家族の医療おまもりツール。",
+    url: "#",
+    caption: "LIFE CARE — PHARMACY STREET",
+    isNew: true,
+    image: "img/app-health.jpg"
+  ,
+    thumb: ""
+  }
+];
+
+const list = document.getElementById("app-list");
+apps.forEach((app, i) => {
+  const band = document.createElement("a");
+  band.className = "app-band";
+  band.href = app.url;
+  if (app.url.startsWith("http")) { band.target = "_blank"; band.rel = "noopener"; }
+  if (app.image) band.style.backgroundImage = `url(${app.image})`;
+  const thumb = app.thumb
+    ? `<img src="${app.thumb}" alt="${app.title}の画面">`
+    : `<span class="t-frame" aria-hidden="true">▢</span><span class="t-name">${app.title}</span><span>APP SCREENSHOT<br>(後日差し替え)</span>`;
+  band.innerHTML = `
+    <div class="band-inner">
+      <div>
+        <span class="band-no">${String(i+1).padStart(2,"0")}.</span>
+        <p class="app-cat">${app.category}${app.isNew ? '<span class="badge-new">NEW</span>' : ''}</p>
+        <h3 class="app-title">${app.title}</h3>
+        <p class="app-desc">${app.desc}</p>
+        <span class="app-open">OPEN APP <span class="arrow">→</span></span>
+      </div>
+      <div class="app-thumb">${thumb}</div>
+    </div>
+    <span class="band-credit">${app.caption}</span>`;
+  list.appendChild(band);
+});
+
+/* marquee */
+const words = "CURRENCY */* KANNADA */* HOSPITAL */* BENGALURU */* FOR EXPATS &amp; FAMILIES */* MADE IN INDIA */* ";
+document.getElementById("marquee").innerHTML = `<span>${words.repeat(4)}</span>`;
+</script>
+</body>
+</html>
