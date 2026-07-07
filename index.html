@@ -20,7 +20,6 @@
   --bg:#0D0D10;
   --cream:#F4F1E8;
   --cream-soft:rgba(244,241,232,.72);
-  --paper:#F4F1E8;
   --ink:#141414;
   --ink-soft:#5F5E58;
   --marigold:#F0A32F;
@@ -41,6 +40,16 @@ body{
 a:focus-visible{outline:2px solid var(--marigold);outline-offset:4px}
 .display{font-family:"Bodoni Moda",serif}
 .serif{font-family:"Shippori Mincho",serif}
+
+/* ---- outlined display text (stroke set per element) ---- */
+.hero-title .row.r1,.k-row.r1 .k-track,h2 .en,.card-no,#about .wm{color:transparent}
+@supports not (-webkit-text-stroke:1px black){
+  .hero-title .row.r1,h2 .en{color:var(--cream)}
+  .k-row.r1 .k-track{color:rgba(244,241,232,.75)}
+  .card-no{color:rgba(244,241,232,.9)}
+  #about .wm{color:rgba(20,20,20,.05)}
+  #about h2 .en{color:var(--ink)}
+}
 
 /* ---- film grain ---- */
 body::after{
@@ -66,6 +75,9 @@ body::after{
 html.js body.ready #loader{transform:translateY(-101%);visibility:hidden}
 body.intro #loader .lw span{transform:none}
 html:not(.js) #loader{display:none}
+/* safety net: even if a script error prevents body.ready, never trap the visitor */
+html.js #loader{animation:loader-kill 0s linear 4s forwards}
+@keyframes loader-kill{to{visibility:hidden}}
 @media (prefers-reduced-motion:reduce){#loader{display:none}}
 
 /* ---- scroll progress ---- */
@@ -73,6 +85,7 @@ html:not(.js) #loader{display:none}
   position:fixed;top:0;left:0;width:100%;height:3px;z-index:350;
   background:var(--marigold);
   transform:scaleX(0);transform-origin:left;
+  pointer-events:none;
 }
 
 /* ---- custom cursor ---- */
@@ -143,37 +156,49 @@ nav a:hover::after{transform:scaleX(1);transform-origin:left}
 }
 .hero-eyebrow::before{content:"";width:48px;height:1px;background:var(--marigold)}
 .hero-title{
-  position:absolute;left:max(28px,4vw);bottom:30vh;bottom:30svh;z-index:2;
+  position:absolute;left:max(28px,4vw);bottom:30%;z-index:2;
   will-change:transform;
 }
-.hero-title .row{display:block;overflow:hidden;line-height:.9}
-.hero-title .ch{
-  display:inline-block;
+.hero-title .row{
+  display:block;overflow:hidden;line-height:.9;
   font-family:"Bodoni Moda",serif;font-weight:700;
   font-size:clamp(3.6rem,15vw,12rem);
   text-transform:uppercase;
+}
+.hero-title .ch{
+  display:inline-block;
   transform:translateY(120%) rotate(8deg);
   transition:transform .9s cubic-bezier(.22,1,.36,1) var(--d,0s);
 }
 body.ready .hero-title .ch{transform:none}
-.hero-title .row.r1 .ch{color:transparent;-webkit-text-stroke:1.5px var(--cream)}
-@supports not (-webkit-text-stroke:1px black){.hero-title .row.r1 .ch{color:var(--cream)}}
-.hero-title .row.r2{margin-left:clamp(24px,9vw,150px)}
-.hero-title .row.r2 .ch{color:var(--marigold);font-style:italic;font-weight:500}
+.hero-title .row.r1{-webkit-text-stroke:1.5px var(--cream)}
+.hero-title .row.r2{
+  margin-left:clamp(24px,9vw,150px);
+  color:var(--marigold);font-style:italic;font-weight:500;
+}
 .hero-sub{
-  position:absolute;right:28px;bottom:26vh;bottom:26svh;z-index:2;
+  position:absolute;right:28px;bottom:26%;z-index:2;
   max-width:22em;text-align:right;
   font-family:"Shippori Mincho",serif;font-weight:600;
   font-size:clamp(.95rem,2vw,1.2rem);letter-spacing:.05em;
   text-shadow:0 1px 12px rgba(0,0,0,.5);
+}
+html.js .hero-sub{
   opacity:0;transform:translateY(20px);
   transition:opacity 1s ease .8s,transform 1s cubic-bezier(.22,1,.36,1) .8s;
 }
 body.ready .hero-sub{opacity:1;transform:none}
 .hero-sub strong{background:linear-gradient(transparent 60%,rgba(240,163,47,.55) 60%)}
 @media (max-width:700px){
-  .hero-title{bottom:40vh;bottom:40svh}
-  .hero-sub{right:20px;bottom:17vh;bottom:17svh}
+  .hero-title{bottom:40%}
+  .hero-sub{right:20px;bottom:17%}
+}
+/* short viewports (landscape phones): keep the title on screen */
+@media (max-height:560px){
+  .hero-title{bottom:48%}
+  .hero-title .row{font-size:clamp(2.4rem,9vw,4.6rem)}
+  .hero-sub{display:none}
+  .kinetic .k-row.r2{display:none}
 }
 .hero-credit{
   position:absolute;left:28px;bottom:20px;z-index:3;
@@ -190,8 +215,7 @@ body.ready .hero-sub{opacity:1;transform:none}
   letter-spacing:.05em;
   animation:kscroll 30s linear infinite;
 }
-.k-row.r1 .k-track{color:transparent;-webkit-text-stroke:1px rgba(244,241,232,.75)}
-@supports not (-webkit-text-stroke:1px black){.k-row.r1 .k-track{color:rgba(244,241,232,.75)}}
+.k-row.r1 .k-track{-webkit-text-stroke:1px rgba(244,241,232,.75)}
 .k-row.r2 .k-track{color:var(--marigold);animation-direction:reverse;animation-duration:34s}
 .k-track em{font-style:normal;padding:0 .5em;color:var(--akane)}
 @keyframes kscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -229,6 +253,8 @@ body.ready .hero-sub{opacity:1;transform:none}
   animation:kscroll 26s linear infinite;
 }
 .ticker-track em{font-style:normal;padding:0 .7em}
+/* pause offscreen infinite animations (battery) */
+.anim-off .hero-bg,.anim-off .k-track,.anim-off .ticker-track{animation-play-state:paused}
 
 /* ===== Section heads ===== */
 .sec-head{max-width:1400px;margin:0 auto;padding:120px 28px 70px}
@@ -244,9 +270,8 @@ h2 .en{
   font-family:"Bodoni Moda",serif;font-weight:700;
   font-size:clamp(3.2rem,10vw,7.5rem);
   line-height:1;letter-spacing:.01em;text-transform:uppercase;
-  color:transparent;-webkit-text-stroke:1.5px var(--cream);
+  -webkit-text-stroke:1.5px var(--cream);
 }
-@supports not (-webkit-text-stroke:1px black){h2 .en{color:var(--cream)}}
 h2 .jp{
   font-family:"Shippori Mincho",serif;
   font-size:clamp(.95rem,2vw,1.15rem);font-weight:600;color:var(--cream-soft);
@@ -281,9 +306,8 @@ h2 .jp{
   position:absolute;top:clamp(20px,4vw,44px);left:clamp(22px,4vw,52px);z-index:2;
   font-family:"Bodoni Moda",serif;font-style:italic;font-weight:500;
   font-size:clamp(4rem,10vw,8.5rem);line-height:1;
-  color:transparent;-webkit-text-stroke:1.5px rgba(244,241,232,.9);
+  -webkit-text-stroke:1.5px rgba(244,241,232,.9);
 }
-@supports not (-webkit-text-stroke:1px black){.card-no{color:rgba(244,241,232,.9)}}
 .card-icon{
   position:absolute;top:clamp(20px,4vw,44px);right:clamp(22px,4vw,52px);z-index:2;
   width:clamp(88px,13vw,156px);aspect-ratio:1/1;
@@ -293,7 +317,7 @@ h2 .jp{
   box-shadow:0 22px 55px rgba(0,0,0,.5);
   transform:rotate(3deg);
   transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
 }
 .card:hover .card-icon{transform:rotate(0deg) translateY(-8px);box-shadow:0 32px 70px rgba(0,0,0,.55)}
 .card-icon img{width:100%;height:100%;object-fit:contain;border-radius:18%}
@@ -301,6 +325,9 @@ h2 .jp{
   font-family:"Shippori Mincho",serif;font-weight:700;
   font-size:.72rem;letter-spacing:.05em;color:var(--ink);
   text-align:center;line-height:1.6;
+}
+.card-icon .t-sub{
+  font-size:.5rem;font-weight:700;letter-spacing:.24em;color:var(--ink-soft);
 }
 .card-body{
   position:absolute;left:0;right:0;bottom:0;z-index:2;
@@ -345,11 +372,12 @@ h2 .jp{
   font-size:.68rem;letter-spacing:.18em;color:rgba(244,241,232,.7);
 }
 @media (max-width:640px){
-  .card-credit{display:none}
+  .card-credit{font-size:.54rem;right:18px;bottom:12px;letter-spacing:.14em}
   .app-desc{font-size:.86rem}
   .card-no{top:76px}
   .card-icon{top:76px}
 }
+@media (max-width:400px){.logo{font-size:.9rem}}
 .coming-note{
   padding:110px 28px;text-align:center;color:var(--cream-soft);
   font-size:.86rem;letter-spacing:.06em;
@@ -362,22 +390,20 @@ h2 .jp{
 
 /* ===== About (paper block) ===== */
 #about{
-  background:var(--paper);color:var(--ink);
+  background:var(--cream);color:var(--ink);
   position:relative;overflow:hidden;
 }
 #about .wm{
   position:absolute;top:2vw;left:-1vw;z-index:0;
   font-family:"Bodoni Moda",serif;font-weight:700;text-transform:uppercase;
   font-size:clamp(8rem,26vw,24rem);line-height:1;white-space:nowrap;
-  color:transparent;-webkit-text-stroke:1.5px rgba(20,20,20,.07);
+  -webkit-text-stroke:1.5px rgba(20,20,20,.07);
   pointer-events:none;user-select:none;
 }
-@supports not (-webkit-text-stroke:1px black){#about .wm{color:rgba(20,20,20,.05)}}
 #about .sec-head{position:relative;z-index:1}
 #about .sec-no{color:var(--ink-soft)}
 #about .sec-no::after{background:rgba(20,20,20,.14)}
 #about h2 .en{-webkit-text-stroke:1.5px var(--ink)}
-@supports not (-webkit-text-stroke:1px black){#about h2 .en{color:var(--ink)}}
 #about h2 .jp{color:var(--ink-soft)}
 .about-grid{
   position:relative;z-index:1;
@@ -487,9 +513,9 @@ footer .f-logo{
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <p class="hero-eyebrow">WEB APPS FOR EXPATS, FAMILIES &amp; TRAVELERS IN INDIA</p>
-    <h1 class="hero-title">
-      <span class="row r1" data-split="NAMASTE"></span>
-      <span class="row r2" data-split="Tools"></span>
+    <h1 class="hero-title" aria-label="NAMASTE TOOLS">
+      <span class="row r1" aria-hidden="true" data-split="NAMASTE">NAMASTE</span>
+      <span class="row r2" aria-hidden="true" data-split="Tools">Tools</span>
     </h1>
     <p class="hero-sub serif">インドで暮らす人も、旅する人も。<br><strong>すこし軽く</strong>なる道具箱。</p>
     <div class="kinetic" aria-hidden="true">
@@ -501,7 +527,7 @@ footer .f-logo{
 
   <section class="statement" id="statement">
     <span class="en">TOOLS FOR EVERYDAY INDIA</span>
-    <p class="jp serif" data-words="インドの|「困った」を、|道具に|変える。"></p>
+    <p class="jp serif" data-words="インドの|*「困った」*を、|道具に|変える。">インドの<em>「困った」</em>を、道具に変える。</p>
   </section>
 
   <div class="ticker" aria-hidden="true"><span class="ticker-track" id="ticker"></span></div>
@@ -596,6 +622,22 @@ const apps = [
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/* ---- intro loader ----
+   Registered before anything else so a script error further down
+   can never leave the loader stuck over the page. */
+requestAnimationFrame(() => document.body.classList.add("intro"));
+const finishIntro = () => document.body.classList.add("ready");
+if (reduceMotion) { finishIntro(); }
+else {
+  const t0 = performance.now();
+  const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  Promise.race([fontsReady, new Promise(r => setTimeout(r, 1800))]).then(() => {
+    const wait = Math.max(0, 900 - (performance.now() - t0));
+    setTimeout(finishIntro, wait);
+  });
+  setTimeout(finishIntro, 3000); /* hard fallback */
+}
+
 /* ---- render app cards ---- */
 const stack = document.getElementById("app-stack");
 apps.forEach((app, i) => {
@@ -605,7 +647,7 @@ apps.forEach((app, i) => {
   if (app.url.startsWith("http")) { card.target = "_blank"; card.rel = "noopener"; }
   const icon = app.thumb
     ? `<img src="${app.thumb}" alt="" loading="lazy">`
-    : `<span class="t-name">${app.title}</span>`;
+    : `<span class="t-name">${app.title}</span><span class="t-sub">COMING SOON</span>`;
   card.innerHTML = `
     <div class="card-inner">
       <div class="card-bg" style="background-image:url(${app.image})"></div>
@@ -625,6 +667,7 @@ apps.forEach((app, i) => {
 /* ---- split hero title into letters ---- */
 document.querySelectorAll("[data-split]").forEach(row => {
   const text = row.dataset.split;
+  row.textContent = ""; /* replace static (no-JS) text with animated letters */
   [...text].forEach((c, i) => {
     const s = document.createElement("span");
     s.className = "ch";
@@ -636,10 +679,11 @@ document.querySelectorAll("[data-split]").forEach(row => {
 
 /* ---- split statement into words ---- */
 const st = document.querySelector(".statement .jp");
+st.textContent = ""; /* replace static (no-JS) text with animated words */
 st.dataset.words.split("|").forEach((w, i) => {
   const s = document.createElement("span");
   s.className = "w";
-  s.innerHTML = w.replace("「困った」", "<em>「困った」</em>");
+  s.innerHTML = w.replace(/\*(.+?)\*/g, "<em>$1</em>"); /* *…* = 強調 */
   s.style.setProperty("--d", `${0.12 * i}s`);
   st.appendChild(s);
 });
@@ -652,72 +696,59 @@ const twords = "Currency <em>✳</em> Kannada <em>✳</em> Hospital <em>✳</em>
 document.getElementById("ticker").innerHTML = twords;
 document.getElementById("ticker2").innerHTML = twords;
 
-/* ---- intro loader ---- */
-requestAnimationFrame(() => document.body.classList.add("intro"));
-const finishIntro = () => document.body.classList.add("ready");
-if (reduceMotion) { finishIntro(); }
-else {
-  const t0 = performance.now();
-  window.addEventListener("load", () => {
-    const wait = Math.max(0, 1000 - (performance.now() - t0));
-    setTimeout(finishIntro, wait);
-  });
-  setTimeout(finishIntro, 2600); /* fallback */
-}
-
 /* ---- reveal on scroll ---- */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
 }, { threshold: 0.15 });
 document.querySelectorAll(".reveal, .statement").forEach(el => io.observe(el));
 
+/* ---- pause offscreen infinite animations ---- */
+const animIO = new IntersectionObserver(entries => {
+  entries.forEach(e => e.target.classList.toggle("anim-off", !e.isIntersecting));
+});
+[document.querySelector(".hero"), ...document.querySelectorAll(".ticker")].forEach(el => animIO.observe(el));
+
 /* ---- scroll-driven effects ---- */
 const progress = document.getElementById("progress");
 const heroTitle = document.querySelector(".hero-title");
 const cards = [...document.querySelectorAll(".card")];
 const contactBg = document.querySelector(".contact-bg");
+/* parallax/stack layers, refs cached once */
+const layers = cards.map(card => {
+  const inner = card.firstElementChild;
+  return { root: card, inner, bg: inner.querySelector(".card-bg") };
+});
+if (contactBg) layers.push({ root: contactBg.parentElement, inner: null, bg: contactBg });
 let ticking = false;
 
 function onScroll() {
   ticking = false;
   const vh = window.innerHeight;
-  const doc = document.documentElement;
-  const max = doc.scrollHeight - vh;
+  const max = document.documentElement.scrollHeight - vh;
   progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  if (reduceMotion) return;
 
-  if (!reduceMotion) {
-    /* hero title lateral drift */
-    if (window.scrollY < vh * 1.2) {
-      heroTitle.style.transform = `translateX(${-window.scrollY * 0.18}px)`;
-    }
-    /* sticky card stack: scale/dim the card being covered */
-    cards.forEach((card, i) => {
-      const inner = card.firstElementChild;
-      const next = cards[i + 1];
+  /* hero title lateral drift (clamped so no stale transform remains) */
+  const sy = Math.min(window.scrollY, vh * 1.2);
+  heroTitle.style.transform = `translateX(${(-sy * 0.18).toFixed(1)}px)`;
+
+  layers.forEach((l, i) => {
+    const r = l.root.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) return; /* offscreen: skip all writes */
+    const prog = (r.top + r.height / 2 - vh / 2) / vh;
+    l.bg.style.transform = `translate3d(0, ${(-prog * 42).toFixed(1)}px, 0) scale(1.05)`;
+    if (l.inner) {
+      /* sticky stack: scale/dim this card as the next one covers it */
+      const next = layers[i + 1];
       let p = 0;
-      if (next) {
-        const top = next.getBoundingClientRect().top;
+      if (next && next.inner) {
+        const top = next.root.getBoundingClientRect().top;
         p = Math.min(1, Math.max(0, 1 - top / vh));
       }
-      inner.style.transform = `scale(${1 - p * 0.05})`;
-      inner.style.filter = `brightness(${1 - p * 0.4})`;
-      /* parallax inside card */
-      const r = card.getBoundingClientRect();
-      if (r.bottom > 0 && r.top < vh) {
-        const prog = (r.top + r.height / 2 - vh / 2) / vh;
-        inner.querySelector(".card-bg").style.transform =
-          `translate3d(0, ${(-prog * 42).toFixed(1)}px, 0) scale(1.05)`;
-      }
-    });
-    /* contact parallax */
-    if (contactBg) {
-      const r = contactBg.parentElement.getBoundingClientRect();
-      if (r.bottom > 0 && r.top < vh) {
-        const prog = (r.top + r.height / 2 - vh / 2) / vh;
-        contactBg.style.transform = `translate3d(0, ${(-prog * 42).toFixed(1)}px, 0) scale(1.05)`;
-      }
+      l.inner.style.transform = `scale(${1 - p * 0.05})`;
+      l.inner.style.filter = `brightness(${1 - p * 0.4})`;
     }
-  }
+  });
 }
 window.addEventListener("scroll", () => {
   if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
